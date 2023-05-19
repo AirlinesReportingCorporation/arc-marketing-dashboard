@@ -1,5 +1,6 @@
 const { schedule } = require("@netlify/functions");
 const cheerio = require("cheerio");
+const { Base64 } = require("js-base64");
 const axios = require("axios");
 const fs = require("fs");
 const { Octokit } = require("@octokit/rest");
@@ -32,7 +33,9 @@ const handler = async function (event, context) {
       feed.push(result);
     });
 
-    commitData(feed);
+    const contentEncoded = Base64.encode(JSON.stringify(feed));
+
+    commitData(contentEncoded);
 
     return {
       statusCode: 200,
@@ -78,7 +81,5 @@ async function commitData(contentEncoded) {
     console.error(err);
   }
 }
-
-//module.exports.handler = schedule("@daily", handler);
 
 exports.handler = schedule("@daily", handler);

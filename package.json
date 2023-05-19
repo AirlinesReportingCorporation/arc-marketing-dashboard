@@ -36,6 +36,7 @@
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "jquery": "^3.6.4",
+    "js-base64": "^3.7.5",
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
