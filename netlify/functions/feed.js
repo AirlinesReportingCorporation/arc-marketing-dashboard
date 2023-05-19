@@ -51,7 +51,7 @@ async function commitData(contentEncoded) {
   try {
     var result = await octokit.repos.getContent({
       owner: "AirlinesReportingCorporation",
-      repo: "arc-functions",
+      repo: "arc-marketing-dashboard",
       path: "feed.json",
     });
 
