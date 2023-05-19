@@ -1,0 +1,289 @@
+@import '../../node_modules/simplebar/dist/simplebar.min.css';
+
+.simplebar-scrollbar.simplebar-visible:before {
+  opacity: .9;
+}
+
+.simplebar-scrollbar::before {
+  background: #189bb0;
+}
+
+.simplebar-track.simplebar-vertical {
+  background: #dddddd;
+  background: rgba(221,221,221,.7);
+  border-radius: 7px;
+}
+
+.data-panel {
+  height: auto !important;
+  margin-top: 0;
+}
+
+.data-panel__inside {
+  display: none;
+}
+
+.data-panel .background {
+  position: relative;
+}
+
+.primary-nav__after,
+.primary-nav__before {
+  display: none;
+}
+
+.data-panel + footer {
+  margin-top: 0 !important;
+}
+
+.covidGraphContainer {
+  margin-top: 60px;
+}
+
+#app {
+  color: #414042;
+  min-height: 80vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .loading {
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    .loading-icon {
+      color: #dddddd;
+      display: block;
+      font-size: 70px;
+      margin: 0 auto;
+    }
+  }
+}
+
+.refundPage {
+  font-family: SourceSansPro-Regular, Arial, Helvetica, sans-serif;
+  width: 100%;
+  background: #ffffff;
+}
+
+.refundJumboContainer {
+  background: #242039;
+  padding: 40px 0 150px;
+  box-shadow: 6px 10px 40px rgba(150, 150, 150, 0.3);
+}
+
+.refundJumbo {
+  background: #242039;
+  color: #ffffff;
+  max-width: 1170px;
+  margin: 0 auto;
+  h1 {
+    color: #ffffff;
+    font-family: SourceSansPro-Bold, Arial, Helvetica, sans-serif;
+    text-align: left;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 1170px;
+    font-size: 2.5rem;
+  }
+  p {
+    color: #ffffff;
+    font-family: SourceSansPro-Regular, Arial, Helvetica, sans-serif;
+    font-size: 18px;
+  }
+  small {
+    font-size: 14px;
+  }
+  a.ctaBtn {
+    margin: 0;
+    padding: 10px;
+    min-height: auto;
+  }
+}
+
+.refundsTable {
+  background: #f6f6f6;
+  padding: 30px 40px;
+  max-width: 1170px;
+  margin: -110px auto 60px auto;
+  box-shadow: 6px 10px 40px rgba(150, 150, 150, 0.3);
+  border-radius: 30px;
+
+  .container {
+    //overflow-y: scroll;
+    min-height: 500px;
+  }
+}
+
+.refundRow {
+  background: #ffffff;
+  margin: 0 25px 15px 0;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(200, 200, 200, 0.3), 0 6px 6px rgba(200, 200, 200, 0.3);
+
+  a,
+  a:focus {
+    font-family: SourceSansPro-Bold, Arial, Helvetica, sans-serif;
+  }
+}
+
+.refundRowTop {
+  font-family: SourceSansPro-Regular, Arial, Helvetica, sans-serif;
+  padding: 10px 25px;
+}
+
+.refundRowBottom {
+  padding: 10px 25px;
+}
+
+.refundRowInfo {
+  display: none;
+  word-break: break-word;
+  padding: 10px 25px;
+  border-top: 1px solid #dddddd;
+
+  &.show {
+    display: block;
+  }
+}
+
+.instructionsContainer {
+  padding-right: 25px;
+  padding-top: 10px;
+}
+
+.refundName {
+  font-family: SourceSansPro-Bold, Arial, Helvetica, sans-serif;
+
+  a,
+  a:focus,
+  a:hover {
+    font-family: SourceSansPro-Bold, Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-size: 20px;
+  }
+}
+
+.refundLabel {
+  font-family: SourceSansPro-Bold, arial, sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #989898;
+  padding-right: 7px;
+}
+
+.refundPolicy {
+  font-family: SourceSansPro-SemiBold, arial, sans-serif;
+  background: #939393;
+  color: #ffffff;
+  padding: 5px 10px;
+  display: inline-block;
+  border-radius: 6px;
+  margin-top: 5px;
+  margin-right: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  max-width: 200px;
+  font-size: 14px;
+}
+
+.refundDownload {
+  background: #189bb0;
+  color: #ffffff;
+
+  cursor: pointer;
+  i {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    background: #16bdc8;
+  }
+}
+
+.refundFiltersTitle {
+  font-family: SourceSansPro-Bold, Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+}
+
+.refundFiltersLabel {
+  font-family: SourceSansPro-SemiBold, Arial, Helvetica, sans-serif;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.optionGroup {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.optionGroupItem {
+  font-family: SourceSansPro-SemiBold, Arial, Helvetica, sans-serif;
+  border: 1px solid #189bb0;
+  color: #189bb0;
+  background: #ffffff;
+  display: inline-block;
+  padding: 7px 10px;
+  cursor: pointer;
+  border-right: none;
+  font-size: 14px;
+  
+
+  &.active {
+    color: #ffffff;
+    background: #189bb0;
+  }
+
+  &:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-right: none;
+  }
+  &:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-right: 1px solid #189bb0;
+  }
+}
+
+.refundResults {
+  min-height: 700px;
+  max-height: 850px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  align-content: flex-start;
+
+  
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.legaleseContainer {
+  margin-bottom: 45px;
+}
+
+.agencyResources {
+  background: #242039;
+  padding: 40px 0;
+  h2, h3, p {
+    color: #ffffff;
+  }
+
+  h2 {
+    margin-bottom: 40px;
+    text-align: left;
+    font-family: SourceSansPro-Bold, Arial, Helvetica, sans-serif;
+  }
+
+  a.ctaBtn {
+    margin: 0;
+    padding: 10px;
+    min-height: auto;
+  }
+}

@@ -1,0 +1,5 @@
+/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, user-agent
+  Referrer-Policy: strict-origin-when-cross-origin
+  
