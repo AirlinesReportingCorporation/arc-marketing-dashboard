@@ -13,30 +13,46 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_ACCESS_TOKEN,
 });
 
-const handler = async function(event, context) {
-
+const handler = async function (event, context) {
   try {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
     //commitData($);
-    console.log($("h1").text());
+    const results = $(".story-list .story-wrap");
+
+    const feed = [];
+
+    results.each((idx, el) => {
+      const result = {
+        title: $(el).find("h3").text(),
+        url: $(el).find("a").attr("href"),
+        description: $(el).find(".skift-take").text(),
+      };
+
+      feed.push(result);
+    });
+
+    commitData(feed);
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Hello World" }),
+      body: JSON.stringify(feed),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
     };
   } catch (err) {
     console.error(err);
   }
 };
 
-
-
 async function commitData(contentEncoded) {
   try {
     var result = await octokit.repos.getContent({
       owner: "AirlinesReportingCorporation",
       repo: "arc-functions",
-      path: "feed.xml",
+      path: "feed.json",
     });
 
     const sha = result?.data?.sha;
