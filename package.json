@@ -33,11 +33,13 @@
   },
   "dependencies": {
     "@octokit/rest": "^19.0.8",
+    "arccorp-vars": "^0.2.5",
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "jquery": "^3.6.4",
     "js-base64": "^3.7.5",
     "moment": "^2.24.0",
+    "puppeteer": "^20.2.1",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",

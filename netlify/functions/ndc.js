@@ -4,9 +4,10 @@ const { Base64 } = require("js-base64");
 const axios = require("axios");
 const fs = require("fs");
 const { Octokit } = require("@octokit/rest");
+const puppeteer = require("puppeteer");
 
 const url =
-  "https://skift.com/?sort=date&s=%22airlines+reporting+corporation%22&site=&g-recaptcha-response=03AL8dmw_A4efsCN61vtvAnPQW3mXrKjtwckZba6kzHBOCaBBGFgk4e8rHqUla8ajtCPeG-9Bfg7yk64PkgNY9gYcRLOMvp4EgfUe0PtpXTFIBBE5atznnqrk0WeknYcTFDdH9hJRX56ebv3-iqGiRJOxgxcRaDRfdAqUjZLqZ-jBMNeaQ55SlxyQlqupLs02M4ughOFiwlRKAAjb3PR9GEbb1zcywZn99e2bj0onK5Zq9QNtCv6UfLYivAyk5eUOkPpS2gttv4Ux-8zhQA3b8QCb34_jyk3bDbzmgrIdor5c6oTweymvHyny0ngMdlhLoSkCFzQM8aLhK0TIX7RKNo9Pp29GxEdL7nJ8xDHmsSd6RStsyAAVj8pT8IPYrbXu7BTFtBRiTcdmEuSukXTeMuhEE9HLuB0bt3fJgTvndYaoAq4XOd6h9NcZJMzB-_WH80IaL9Y3zpiZMT7_gDuYM37dW6OarhRsQpAzRrLjmNN9vPRGt5Mx2QPBkMVSaj0bYvRQMmPLJYKY_LECEhPhDaPece0fD4iuQUg";
+  "https://www.google.com/search?q=new+distribution+capability&rlz=1C1CHBF_enUS919US919&tbs=sbd:1&tbm=nws&sxsrf=APwXEdd50xfujR2qK8SXDoOvCQTBkyCiiw:1684525400385&tbas=0&source=lnt&sa=X&ved=2ahUKEwi_yuqQkoL_AhUjEFkFHSNbCXIQpwV6BAgBEBc&biw=1920&bih=880&dpr=1";
 
 require("dotenv").config();
 
@@ -16,24 +17,41 @@ const octokit = new Octokit({
 
 const handler = async function (event, context) {
   try {
-    const { data } = await axios.get(url);
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.goto(url);
+
+    const data = await page.$eval("#search", (element) => {
+      return element.innerHTML;
+    });
+
     const $ = cheerio.load(data);
     //commitData($);
-    const results = $(".story-list .story-wrap");
+    const results = $("a");
+
+    //console.log(results);
 
     const feed = [];
 
+    //$(results).
+
     results.each((idx, el) => {
+      //console.log($(result).text());
       const result = {
-        title: $(el).find("h3").text(),
-        url: $(el).find("a").attr("href"),
-        description: $(el).find(".skift-take").text(),
+        title: $(el).find("div[role=heading]").text(),
+        url: $(el).attr("href"),
+        description: $(el).find("div[role=heading]").next().text(),
+        date: $(el).find("span").text().split(".")[1],
+        source: $(el).find("span").text().split(".")[0],
       };
 
       feed.push(result);
     });
 
     const contentEncoded = Base64.encode(JSON.stringify(feed));
+
+    //const contentEncoded = Base64.encode(JSON.stringify(feed));
 
     commitData(contentEncoded);
 
@@ -55,7 +73,7 @@ async function commitData(contentEncoded) {
     var result = await octokit.repos.getContent({
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/feed.json",
+      path: "dist/ndc.json",
     });
 
     const sha = result?.data?.sha;
@@ -64,7 +82,7 @@ async function commitData(contentEncoded) {
       // replace the owner and email with your own details
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/feed.json",
+      path: "dist/ndc.json",
       message: "update-feed-file-" + new Date().getTime() + "-if",
       content: contentEncoded,
       committer: {

@@ -4,9 +4,10 @@ const { Base64 } = require("js-base64");
 const axios = require("axios");
 const fs = require("fs");
 const { Octokit } = require("@octokit/rest");
+const puppeteer = require("puppeteer");
 
 const url =
-  "https://skift.com/?sort=date&s=%22airlines+reporting+corporation%22&site=&g-recaptcha-response=03AL8dmw_A4efsCN61vtvAnPQW3mXrKjtwckZba6kzHBOCaBBGFgk4e8rHqUla8ajtCPeG-9Bfg7yk64PkgNY9gYcRLOMvp4EgfUe0PtpXTFIBBE5atznnqrk0WeknYcTFDdH9hJRX56ebv3-iqGiRJOxgxcRaDRfdAqUjZLqZ-jBMNeaQ55SlxyQlqupLs02M4ughOFiwlRKAAjb3PR9GEbb1zcywZn99e2bj0onK5Zq9QNtCv6UfLYivAyk5eUOkPpS2gttv4Ux-8zhQA3b8QCb34_jyk3bDbzmgrIdor5c6oTweymvHyny0ngMdlhLoSkCFzQM8aLhK0TIX7RKNo9Pp29GxEdL7nJ8xDHmsSd6RStsyAAVj8pT8IPYrbXu7BTFtBRiTcdmEuSukXTeMuhEE9HLuB0bt3fJgTvndYaoAq4XOd6h9NcZJMzB-_WH80IaL9Y3zpiZMT7_gDuYM37dW6OarhRsQpAzRrLjmNN9vPRGt5Mx2QPBkMVSaj0bYvRQMmPLJYKY_LECEhPhDaPece0fD4iuQUg";
+  "https://www.travelpulse.com/Search?q=Airlines%20Reporting%20Corporation";
 
 require("dotenv").config();
 
@@ -16,18 +17,34 @@ const octokit = new Octokit({
 
 const handler = async function (event, context) {
   try {
-    const { data } = await axios.get(url);
+    const browser = await puppeteer.launch({headless: "new"});
+    const page = await browser.newPage();
+
+    await page.goto(url);
+
+    const sort = await page.waitForSelector("#MostPopulardropdownMenuButton");
+    await page.click("#MostPopulardropdownMenuButton");
+    //const recentsort = await page.waitForSelector('#MostPopulardropdownMenuButton [_sort="date"]');
+    //await page.click('#MostPopulardropdownMenuButton [_sort="date"]');
+    
+
+    const data = await page.$eval(".search-list-results", (element) => {
+      return element.innerHTML;
+    });
+
     const $ = cheerio.load(data);
     //commitData($);
-    const results = $(".story-list .story-wrap");
+    const results = $(".search-result-item");
+
 
     const feed = [];
 
+    //$(results).
+
     results.each((idx, el) => {
+      //console.log($(result).text());
       const result = {
-        title: $(el).find("h3").text(),
-        url: $(el).find("a").attr("href"),
-        description: $(el).find(".skift-take").text(),
+        title: $(el).find("h2").text(),
       };
 
       feed.push(result);
@@ -35,7 +52,9 @@ const handler = async function (event, context) {
 
     const contentEncoded = Base64.encode(JSON.stringify(feed));
 
-    commitData(contentEncoded);
+    //const contentEncoded = Base64.encode(JSON.stringify(feed));
+    console.log(feed);
+    //commitData(contentEncoded);
 
     return {
       statusCode: 200,
@@ -55,7 +74,7 @@ async function commitData(contentEncoded) {
     var result = await octokit.repos.getContent({
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/feed.json",
+      path: "dist/arcSearch.json",
     });
 
     const sha = result?.data?.sha;
@@ -64,7 +83,7 @@ async function commitData(contentEncoded) {
       // replace the owner and email with your own details
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/feed.json",
+      path: "dist/arcSearch.json",
       message: "update-feed-file-" + new Date().getTime() + "-if",
       content: contentEncoded,
       committer: {
