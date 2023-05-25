@@ -23,6 +23,7 @@ function App() {
   const [ndcData, setndcData] = useState([]);
   const [skiftData, setskiftData] = useState([]);
   const [tpData, settpData] = useState([]);
+  const [dimeData, setdimeData] = useState([]);
 
   useEffect(() => {
     const loadFeeds = async () => {
@@ -41,9 +42,14 @@ function App() {
           "https://arc-marketing-dashboard.netlify.app/travelpulse.json"
         );
 
+        const responseDime = await axios.get(
+          "https://arc-marketing-dashboard.netlify.app/dime.json"
+        );
+
         setndcData(responseNdc.data);
         setskiftData(responseSkift.data);
         settpData(responseTP.data);
+        setdimeData(responseDime.data);
         setData(response.data);
         
       } catch (error) {
@@ -110,9 +116,9 @@ function App() {
           <div class="col-lg-4">
             <div className="amd-card text-white">
               <div className="amd-eyebrow type-color-teal">
-                Google News Feed
+                ARC in Company Dime
               </div>
-              <h2>NDC</h2>
+              <h2></h2>
               <div className="amd-feed">
                 {loaded &&
                   ndcData.map((item) => {
@@ -172,6 +178,37 @@ function App() {
                             <a className="amd-feed-link" href={item.url}>
                               {item.title}
                             </a>
+                          </div>
+                        </div>
+                        <div>{item.description}</div>
+                      </>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+        <div class="col-lg-4">
+            <div className="amd-card text-white">
+              <div className="amd-eyebrow type-color-teal">
+                Google News Feed
+              </div>
+              <h2>Keyboard: NDC</h2>
+              <div className="amd-feed">
+                {loaded &&
+                  ndcData.map((item) => {
+                    return (
+                      <>
+                        <div className="row no-gutters m-0 align-items-center">
+                          <div className="col-auto">
+                            <a className="amd-feed-link" href={item.url}>
+                              {item.title}
+                            </a>
+                          </div>
+                          <div className="col-auto">
+                            <strong className="pl-2">{item.date}</strong>
                           </div>
                         </div>
                         <div>{item.description}</div>

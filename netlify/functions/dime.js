@@ -34,8 +34,9 @@ const handler = async function (event, context) {
     });
 
     const contentEncoded = Base64.encode(JSON.stringify(feed));
-    console.log(feed);
-    //commitData(contentEncoded);
+    
+    //console.log(feed);
+    commitData(contentEncoded);
 
     return {
       statusCode: 200,
