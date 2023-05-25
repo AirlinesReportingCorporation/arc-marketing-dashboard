@@ -22,6 +22,7 @@ function App() {
   const [data, setData] = useState([]);
   const [ndcData, setndcData] = useState([]);
   const [skiftData, setskiftData] = useState([]);
+  const [tpData, settpData] = useState([]);
 
   useEffect(() => {
     const loadFeeds = async () => {
@@ -36,9 +37,15 @@ function App() {
           "https://arc-marketing-dashboard.netlify.app/feed.json"
         );
 
+        const responseTP = await axios.get(
+          "https://arc-marketing-dashboard.netlify.app/travelpulse.json"
+        );
+
         setndcData(responseNdc.data);
         setskiftData(responseSkift.data);
+        settpData(responseTP.data);
         setData(response.data);
+        
       } catch (error) {
         console.log(error);
       } finally {
@@ -151,7 +158,29 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="col-lg-4"></div>
+          <div className="col-lg-4">
+            <div className="amd-card text-white">
+              <div className="amd-eyebrow type-color-teal">TravelPulse</div>
+              <h2>ARC in TravelPulse</h2>
+              <div className="amd-feed">
+                {loaded &&
+                  tpData.map((item) => {
+                    return (
+                      <>
+                        <div className="row no-gutters m-0 align-items-center">
+                          <div className="col-auto">
+                            <a className="amd-feed-link" href={item.url}>
+                              {item.title}
+                            </a>
+                          </div>
+                        </div>
+                        <div>{item.description}</div>
+                      </>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

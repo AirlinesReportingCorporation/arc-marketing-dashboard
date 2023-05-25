@@ -15,20 +15,22 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_ACCESS_TOKEN,
 });
 
+function delay(time) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, time);
+  });
+}
+
 const handler = async function (event, context) {
   try {
-    const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    await page.goto(url, { waitUntil: "domcontentloaded" });
+    await page.goto(url, {
+      waitUntil: "networkidle2",
+    });
 
-    const sort = await page.waitForSelector("#dropdown-btn");
-    const [response] = await Promise.all([
-      page.waitForNavigation(),
-      page.click("h2 a"),
-    ]);
-    //const recentsort = await page.waitForSelector('#MostPopulardropdownMenuButton [_sort="date"]');
-    //await page.click('#MostPopulardropdownMenuButton [_sort="date"]');
+    //await page.click(".form-check-label:nth-child(2)");
 
     const data = await page.$eval(".search-list-results", (element) => {
       return element.innerHTML;
@@ -38,6 +40,8 @@ const handler = async function (event, context) {
     //commitData($);
     const results = $(".search-result-item");
 
+    //console.log(results);
+
     const feed = [];
 
     //$(results).
@@ -46,6 +50,9 @@ const handler = async function (event, context) {
       //console.log($(result).text());
       const result = {
         title: $(el).find("h2").text(),
+        url: "https://www.travelpulse.com/" + $(el).find("a").attr("href"),
+        description: $(el).find(".intro-text").text(),
+        date: $(el).find(".list-unstyled li:nth-child(4)").text(),
       };
 
       feed.push(result);
@@ -54,8 +61,7 @@ const handler = async function (event, context) {
     const contentEncoded = Base64.encode(JSON.stringify(feed));
 
     //const contentEncoded = Base64.encode(JSON.stringify(feed));
-    console.log(feed);
-    //commitData(contentEncoded);
+    commitData(contentEncoded);
 
     return {
       statusCode: 200,
@@ -85,7 +91,7 @@ async function commitData(contentEncoded) {
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
       path: "dist/travelpulse.json",
-      message: "update-feed-file-" + new Date().getTime() + "-travelpulse-if",
+      message: "update-feed-file-" + new Date().getTime() + "-arcsearch-if",
       content: contentEncoded,
       committer: {
         name: `netlify-functions`,
