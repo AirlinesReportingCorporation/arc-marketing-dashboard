@@ -1,8 +1,8 @@
 @use "~arccorp-vars/dist/scss/main.scss";
-@import '../../node_modules/simplebar/dist/simplebar.min.css';
+@import "../../node_modules/simplebar/dist/simplebar.min.css";
 
 .simplebar-scrollbar.simplebar-visible:before {
-  opacity: .9;
+  opacity: 0.9;
 }
 
 .simplebar-scrollbar::before {
@@ -11,7 +11,7 @@
 
 .simplebar-track.simplebar-vertical {
   background: #dddddd;
-  background: rgba(221,221,221,.7);
+  background: rgba(221, 221, 221, 0.7);
   border-radius: 7px;
 }
 
@@ -59,9 +59,51 @@
       margin: 0 auto;
     }
   }
+
+  .row {
+    max-width: 100%;
+  }
+
+  .ctaBtn {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 .amd-page {
   display: block;
   width: 100%;
+  padding-bottom: 60px;
+  min-height: 100vh;
+
+  h2 {
+    font-family: SourceSansPro-SemiBold, Arial, Helvetica, sans-serif;
+  }
+}
+
+.amd-eyebrow {
+  text-transform: uppercase;
+  font-family: SourceSansPro-SemiBold, Arial, Helvetica, sans-serif;
+}
+
+a.amd-feed-link {
+  font-family: SourceSansPro-Bold, Arial, Helvetica, sans-serif;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.amd-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  margin: 15px;
+  height: 400px;
+  overflow: hidden;
+}
+
+.amd-feed {
+  font-size: 14px;
+  max-height: 250px;
+  overflow-y: scroll;
 }

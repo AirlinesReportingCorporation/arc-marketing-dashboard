@@ -65,7 +65,7 @@ async function commitData(contentEncoded) {
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
       path: "dist/feed.json",
-      message: "update-feed-file-" + new Date().getTime() + "-if",
+      message: "update-feed-file-" + new Date().getTime() + "-skift-if",
       content: contentEncoded,
       committer: {
         name: `netlify-functions`,

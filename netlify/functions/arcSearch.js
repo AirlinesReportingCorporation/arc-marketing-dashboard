@@ -7,7 +7,7 @@ const { Octokit } = require("@octokit/rest");
 const puppeteer = require("puppeteer");
 
 const url =
-  "https://www.google.com/search?q=travel+agencies&rlz=1C1CHBF_enUS919US919&biw=1920&bih=937&tbs=sbd%3A1&tbm=nws&sxsrf=APwXEddBQzzDTnep_QkJJ_INz21F5cqQtA%3A1684786856199&ei=qM5rZI_PC-Kv5NoPxqC_6AM&ved=0ahUKEwiPw9eQ4In_AhXiF1kFHUbQDz0Q4dUDCA4&uact=5&oq=travel+agencies&gs_lcp=Cgxnd3Mtd2l6LW5ld3MQAzIICAAQgAQQsQMyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6CwgAEIoFELEDEJECOg4IABCKBRCxAxCDARCRAjoICAAQigUQkQI6CwgAEIAEELEDEIMBOgcIABCKBRBDOg0IABCKBRCxAxCDARBDOgsIABCKBRCxAxCDAToKCAAQigUQsQMQQzoECAAQAzoKCAAQgAQQsQMQCjoHCAAQgAQQClDPBVj_EmDSE2gCcAB4AIABYYgB7QiSAQIxNpgBAKABAcABAQ&sclient=gws-wiz-news";
+  "https://www.google.com/search?q=airlines+reporting+corporation&tbas=0&tbs=sbd:1&tbm=nws&sxsrf=APwXEdcK2F0sGh8uO4DzNpHWerlIncTBEw:1685030656494&tbas=0&source=lnt&sa=X&ved=2ahUKEwij1dyt7JD_AhXtFlkFHRymCxEQpwV6BAgDEBc&biw=1389&bih=870&dpr=1";
 
 require("dotenv").config();
 
@@ -83,7 +83,7 @@ async function commitData(contentEncoded) {
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
       path: "dist/arcSearch.json",
-      message: "update-feed-file-" + new Date().getTime() + "-if",
+      message: "update-feed-file-" + new Date().getTime() + "-arcsearch-if",
       content: contentEncoded,
       committer: {
         name: `netlify-functions`,

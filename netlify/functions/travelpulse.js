@@ -17,16 +17,18 @@ const octokit = new Octokit({
 
 const handler = async function (event, context) {
   try {
-    const browser = await puppeteer.launch({headless: "new"});
+    const browser = await puppeteer.launch({ headless: "new" });
     const page = await browser.newPage();
 
-    await page.goto(url);
+    await page.goto(url, { waitUntil: "domcontentloaded" });
 
-    const sort = await page.waitForSelector("#MostPopulardropdownMenuButton");
-    await page.click("#MostPopulardropdownMenuButton");
+    const sort = await page.waitForSelector("#dropdown-btn");
+    const [response] = await Promise.all([
+      page.waitForNavigation(),
+      page.click("h2 a"),
+    ]);
     //const recentsort = await page.waitForSelector('#MostPopulardropdownMenuButton [_sort="date"]');
     //await page.click('#MostPopulardropdownMenuButton [_sort="date"]');
-    
 
     const data = await page.$eval(".search-list-results", (element) => {
       return element.innerHTML;
@@ -35,7 +37,6 @@ const handler = async function (event, context) {
     const $ = cheerio.load(data);
     //commitData($);
     const results = $(".search-result-item");
-
 
     const feed = [];
 
@@ -74,7 +75,7 @@ async function commitData(contentEncoded) {
     var result = await octokit.repos.getContent({
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/arcSearch.json",
+      path: "dist/travelpulse.json",
     });
 
     const sha = result?.data?.sha;
@@ -83,8 +84,8 @@ async function commitData(contentEncoded) {
       // replace the owner and email with your own details
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/arcSearch.json",
-      message: "update-feed-file-" + new Date().getTime() + "-if",
+      path: "dist/travelpulse.json",
+      message: "update-feed-file-" + new Date().getTime() + "-travelpulse-if",
       content: contentEncoded,
       committer: {
         name: `netlify-functions`,
