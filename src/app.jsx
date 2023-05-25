@@ -51,7 +51,6 @@ function App() {
         settpData(responseTP.data);
         setdimeData(responseDime.data);
         setData(response.data);
-        
       } catch (error) {
         console.log(error);
       } finally {
@@ -68,18 +67,16 @@ function App() {
       <div className="container-fluid mt-3">
         <div className="row">
           <div className="col-lg-4">
-            <div className="amd-card bg-color-tarmac text-white">
-              <div className="amd-eyebrow type-color-teal">Tools</div>
-              <h2 className="type-color-white">ARC Marketing Dashboard</h2>
-              <p className="type-color-white">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Sapiente, perspiciatis. Repellendus fuga magnam voluptatem
-                eligendi deleniti dolore assumenda numquam minima, quos sunt
-                dicta illum et qui fugiat adipisci recusandae. Inventore!
-              </p>
-              <a href="#" className="ctaBtn">
-                Learn More
-              </a>
+            <div className="amd-card d-flex align-items-center  bg-color-tarmac text-white">
+              <div>
+                <div className="amd-eyebrow type-color-teal">Tools</div>
+                <h2 className="type-color-white">ARC News Aggregator</h2>
+                <p className="type-color-white">
+                  A collection of searches and news feed related to Airlines
+                  Reporting Corporation. Each feed is updated every morning at
+                  8am.
+                </p>
+              </div>
             </div>
           </div>
           <div className="col-lg-8">
@@ -93,17 +90,16 @@ function App() {
                   data.map((item) => {
                     return (
                       <>
-                        <div className="row no-gutters m-0 align-items-center">
-                          <div className="col-auto">
-                            <a className="amd-feed-link" href={item.url}>
-                              {item.title}
-                            </a>
-                          </div>
-                          <div className="col-auto">
-                            <strong className="pl-2">{item.date}</strong>
+                        <div className="">
+                          <a className="amd-feed-link" href={item.url}>
+                            {item.title}
+                          </a>
+
+                          <div className="mb-1">
+                            <strong>{item.date}</strong>
                           </div>
                         </div>
-                        <div>{item.description}</div>
+                        <div className="mb-3">{item.description}</div>
                       </>
                     );
                   })}
@@ -112,29 +108,26 @@ function App() {
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-4">
+        <div className="row">
+          <div className="col-lg-4">
             <div className="amd-card text-white">
-              <div className="amd-eyebrow type-color-teal">
-                ARC in Company Dime
-              </div>
-              <h2></h2>
+              <div className="amd-eyebrow type-color-teal">Company Dime</div>
+              <h2>ARC in Company Dime</h2>
               <div className="amd-feed">
                 {loaded &&
-                  ndcData.map((item) => {
+                  dimeData.map((item) => {
                     return (
                       <>
-                        <div className="row no-gutters m-0 align-items-center">
-                          <div className="col-auto">
-                            <a className="amd-feed-link" href={item.url}>
-                              {item.title}
-                            </a>
-                          </div>
-                          <div className="col-auto">
-                            <strong className="pl-2">{item.date}</strong>
+                        <div className="">
+                          <a className="amd-feed-link" href={item.url}>
+                            {item.title}
+                          </a>
+
+                          <div className="mb-1">
+                            <strong>{item.date}</strong>
                           </div>
                         </div>
-                        <div>{item.description}</div>
+                        <div className="mb-3">{item.description}</div>
                       </>
                     );
                   })}
@@ -173,14 +166,16 @@ function App() {
                   tpData.map((item) => {
                     return (
                       <>
-                        <div className="row no-gutters m-0 align-items-center">
-                          <div className="col-auto">
-                            <a className="amd-feed-link" href={item.url}>
-                              {item.title}
-                            </a>
+                        <div className="">
+                          <a className="amd-feed-link" href={item.url}>
+                            {item.title}
+                          </a>
+
+                          <div className="mb-1">
+                            <strong>{item.date}</strong>
                           </div>
                         </div>
-                        <div>{item.description}</div>
+                        <div className="mb-3">{item.description}</div>
                       </>
                     );
                   })}
@@ -190,28 +185,27 @@ function App() {
         </div>
 
         <div className="row">
-        <div class="col-lg-4">
+          <div className="col-lg-4">
             <div className="amd-card text-white">
               <div className="amd-eyebrow type-color-teal">
                 Google News Feed
               </div>
-              <h2>Keyboard: NDC</h2>
+              <h2>Keyword: NDC</h2>
               <div className="amd-feed">
                 {loaded &&
                   ndcData.map((item) => {
                     return (
                       <>
-                        <div className="row no-gutters m-0 align-items-center">
-                          <div className="col-auto">
-                            <a className="amd-feed-link" href={item.url}>
-                              {item.title}
-                            </a>
-                          </div>
-                          <div className="col-auto">
-                            <strong className="pl-2">{item.date}</strong>
+                        <div className="">
+                          <a className="amd-feed-link" href={item.url}>
+                            {item.title}
+                          </a>
+
+                          <div className="mb-1">
+                            <strong>{item.date}</strong>
                           </div>
                         </div>
-                        <div>{item.description}</div>
+                        <div className="mb-3">{item.description}</div>
                       </>
                     );
                   })}
