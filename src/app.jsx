@@ -25,6 +25,7 @@ function App() {
   const [tpData, settpData] = useState([]);
   const [dimeData, setdimeData] = useState([]);
   const [twData, settwData] = useState([]);
+  const [btnData, setbtnData] = useState([]);
 
   useEffect(() => {
     const loadFeeds = async () => {
@@ -47,12 +48,16 @@ function App() {
         const responseTW = await axios.get(
           "https://arc-marketing-dashboard.netlify.app/travelweekly.json"
         );
+        const responseBTN = await axios.get(
+          "https://arc-marketing-dashboard.netlify.app/btn.json"
+        );
 
         setndcData(responseNdc.data);
         setskiftData(responseSkift.data);
         settpData(responseTP.data);
         setdimeData(responseDime.data);
         settwData(responseTW.data);
+        setbtnData(responseBTN.data);
         setData(response.data);
       } catch (error) {
         console.log(error);
@@ -195,6 +200,31 @@ function App() {
               <div className="amd-feed">
                 {loaded &&
                   twData.map((item) => {
+                    return (
+                      <>
+                        <div className="">
+                          <a className="amd-feed-link" href={item.url}>
+                            {item.title}
+                          </a>
+
+                          <div className="mb-1">
+                            <strong>{item.date}</strong>
+                          </div>
+                        </div>
+                        <div className="mb-3">{item.description}</div>
+                      </>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-4">
+            <div className="amd-card text-white">
+              <div className="amd-eyebrow type-color-teal">BTN</div>
+              <h2>ARC in BTN</h2>
+              <div className="amd-feed">
+                {loaded &&
+                  btnData.map((item) => {
                     return (
                       <>
                         <div className="">
