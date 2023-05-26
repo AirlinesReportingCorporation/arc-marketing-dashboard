@@ -80,8 +80,8 @@ function App() {
                 <div className="amd-eyebrow type-color-teal">Tools</div>
                 <h2 className="type-color-white">ARC News Scanner</h2>
                 <p className="type-color-white">
-                  A collection of searches and news feed related to Airlines
-                  Reporting Corporation. Each feed is updated every morning at
+                  A collection of searches and news feeds related to Airlines
+                  Reporting Corporation (ARC). Each feed is updated every morning at
                   8:00 am EDT.
                 </p>
               </div>
