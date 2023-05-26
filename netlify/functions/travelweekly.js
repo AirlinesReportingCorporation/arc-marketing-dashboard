@@ -83,4 +83,4 @@ async function commitData(contentEncoded) {
   }
 }
 
-exports.handler = schedule("@daily", handler);
+exports.handler = schedule("53 12 * * *", handler);

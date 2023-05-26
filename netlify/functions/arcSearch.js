@@ -100,4 +100,4 @@ async function commitData(contentEncoded) {
   }
 }
 
-exports.handler = schedule("59 23 * * *", handler);
+exports.handler = schedule("59 12 * * *", handler);

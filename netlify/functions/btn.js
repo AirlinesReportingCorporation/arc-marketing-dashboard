@@ -58,8 +58,8 @@ const handler = async function (event, context) {
 
     //const contentEncoded = Base64.encode(JSON.stringify(feed));
 
-    console.log(feed);
-    //commitData(contentEncoded);
+    //console.log(feed);
+    commitData(contentEncoded);
 
     return {
       statusCode: 200,
@@ -79,7 +79,7 @@ async function commitData(contentEncoded) {
     var result = await octokit.repos.getContent({
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/ndc.json",
+      path: "dist/btn.json",
     });
 
     const sha = result?.data?.sha;
@@ -88,7 +88,7 @@ async function commitData(contentEncoded) {
       // replace the owner and email with your own details
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/ndc.json",
+      path: "dist/btn.json",
       message: "update-feed-file-" + new Date().getTime() + "-ndc-if",
       content: contentEncoded,
       committer: {
@@ -106,4 +106,4 @@ async function commitData(contentEncoded) {
   }
 }
 
-exports.handler = schedule("@daily", handler);
+exports.handler = schedule("58 12 * * *", handler);
