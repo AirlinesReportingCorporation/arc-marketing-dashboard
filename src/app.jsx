@@ -67,14 +67,14 @@ function App() {
       <div className="container-fluid mt-3">
         <div className="row">
           <div className="col-lg-4">
-            <div className="amd-card d-flex align-items-center  bg-color-tarmac text-white">
-              <div>
+            <div className="amd-card amd-card-main d-flex text-white">
+              <div className="mt-4">
                 <div className="amd-eyebrow type-color-teal">Tools</div>
-                <h2 className="type-color-white">ARC News Aggregator</h2>
+                <h2 className="type-color-white">ARC News Scanner</h2>
                 <p className="type-color-white">
                   A collection of searches and news feed related to Airlines
                   Reporting Corporation. Each feed is updated every morning at
-                  8am.
+                  8:00 am EDT.
                 </p>
               </div>
             </div>

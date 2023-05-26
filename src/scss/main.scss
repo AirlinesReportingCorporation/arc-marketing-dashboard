@@ -100,6 +100,13 @@ a.amd-feed-link {
   margin: 30px 15px 0;
   height: 400px;
   overflow: hidden;
+
+  &.amd-card-main {
+    background: #2a2b2c
+      url(https://www2.arccorp.com/globalassets/homepage/redesign/march-update/monthly_sales_stats.jpg)
+      center center no-repeat;
+    background-size: cover;
+  }
 }
 
 .amd-feed {

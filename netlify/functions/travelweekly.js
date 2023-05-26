@@ -4,10 +4,8 @@ const { Base64 } = require("js-base64");
 const axios = require("axios");
 const fs = require("fs");
 const { Octokit } = require("@octokit/rest");
-const puppeteer = require("puppeteer");
 
-const url =
-  "https://www.google.com/search?q=airlines+reporting+corporation&tbas=0&tbs=sbd:1&tbm=nws&sxsrf=APwXEdcK2F0sGh8uO4DzNpHWerlIncTBEw:1685030656494&tbas=0&source=lnt&sa=X&ved=2ahUKEwij1dyt7JD_AhXtFlkFHRymCxEQpwV6BAgDEBc&biw=1389&bih=870&dpr=1";
+const url = "https://www.travelweekly.com/Search?q=airlines%20reporting%20corporation%20ARC"
 
 require("dotenv").config();
 
@@ -17,42 +15,27 @@ const octokit = new Octokit({
 
 const handler = async function (event, context) {
   try {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-
-    await page.goto(url);
-
-    const data = await page.$eval("#search", (element) => {
-      return element.innerHTML;
-    });
-
+    const { data } = await axios.get(url);
     const $ = cheerio.load(data);
     //commitData($);
-    const results = $("a");
-
-    //console.log(results);
+    const results = $(".ez-itemMod-item");
 
     const feed = [];
 
-    //$(results).
-
     results.each((idx, el) => {
-      //console.log($(result).text());
       const result = {
-        title: $(el).find("div[role=heading]").text(),
-        url: $(el).attr("href"),
-        description: $(el).find("div[role=heading]").next().text(),
-        date: $(el).find("span").text().split(".")[1],
-        source: $(el).find("span").text().split(".")[0],
+        title: $(el).find("a").text(),
+        url: $(el).find("a").attr("href"),
+        description: $(el).find("p sep").text(),
+        date: $(el).find(".ez-date").text().split("by")[0]
       };
 
       feed.push(result);
     });
 
     const contentEncoded = Base64.encode(JSON.stringify(feed));
-
-    //const contentEncoded = Base64.encode(JSON.stringify(feed));
-
+    
+    //console.log(feed);
     commitData(contentEncoded);
 
     return {
@@ -73,7 +56,7 @@ async function commitData(contentEncoded) {
     var result = await octokit.repos.getContent({
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/arcSearch.json",
+      path: "dist/travelweekly.json",
     });
 
     const sha = result?.data?.sha;
@@ -82,8 +65,8 @@ async function commitData(contentEncoded) {
       // replace the owner and email with your own details
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
-      path: "dist/arcSearch.json",
-      message: "update-feed-file-" + new Date().getTime() + "-arcsearch-if",
+      path: "dist/travelweekly.json",
+      message: "update-feed-file-" + new Date().getTime() + "-travelweekly-if",
       content: contentEncoded,
       committer: {
         name: `netlify-functions`,
@@ -100,4 +83,4 @@ async function commitData(contentEncoded) {
   }
 }
 
-exports.handler = schedule("9 0 * * *", handler);
+exports.handler = schedule("@daily", handler);
