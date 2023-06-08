@@ -1,0 +1,14 @@
+[functions."arcSearch"]
+schedule = "58 11 * * *"
+
+[functions."btn"]
+schedule = "58 11 * * *"
+
+[functions."dime"]
+schedule = "58 11 * * *"
+
+[functions."feed"]
+schedule = "58 11 * * *"
+
+[functions."ndc"]
+schedule = "58 11 * * *"

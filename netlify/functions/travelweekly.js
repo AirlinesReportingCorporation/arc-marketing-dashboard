@@ -25,7 +25,7 @@ const handler = async function (event, context) {
     results.each((idx, el) => {
       const result = {
         title: $(el).find("a").text(),
-        url: $(el).find("a").attr("href"),
+        url: "https://www.travelweekly.com/" + $(el).find("a").attr("href"),
         description: $(el).find("p sep").text(),
         date: $(el).find(".ez-date").text().split("by")[0]
       };

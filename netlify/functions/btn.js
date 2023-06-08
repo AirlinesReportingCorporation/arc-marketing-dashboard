@@ -46,7 +46,7 @@ const handler = async function (event, context) {
       //console.log($(result).text());
       const result = {
         title: $(el).find(".ez-title").text(),
-        url: $(el).find("a").attr("href"),
+        url: "https://www.businesstravelnews.com/" + $(el).find("a").attr("href"),
         description: $(el).find(".ez-desc").text(),
         date: $(el).find(".ez-date").text(),
       };

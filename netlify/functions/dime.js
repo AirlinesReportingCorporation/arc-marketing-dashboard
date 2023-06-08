@@ -25,7 +25,7 @@ const handler = async function (event, context) {
     results.each((idx, el) => {
       const result = {
         title: $(el).find("h2").text(),
-        url: $(el).find("a").attr("href"),
+        url: $(el).find(".entry-title a").attr("href"),
         description: $(el).find(".entry-summary").text(),
         date: $(el).find(".entry-date").text()
       };
@@ -66,7 +66,7 @@ async function commitData(contentEncoded) {
       owner: "AirlinesReportingCorporation",
       repo: "arc-marketing-dashboard",
       path: "dist/dime.json",
-      message: "update-feed-file-" + new Date().getTime() + "-skift-if",
+      message: "update-feed-file-" + new Date().getTime() + "-dime-if",
       content: contentEncoded,
       committer: {
         name: `netlify-functions`,
